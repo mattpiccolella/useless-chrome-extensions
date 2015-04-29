@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+  "name": "Rick Roll",
+  "version": "1.0",
+  "description": "Application that replaces all links with a link to RickRoll.",
+  "content_scripts": 
+  [
+    {
+      "matches": ["*://*/*"],
+      "js": ["script.js"],
+      "run_at": "document_end"
+    }
+  ]
+}

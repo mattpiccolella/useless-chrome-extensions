@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+  "name": "Text Replacement",
+  "version": "1.0",
+  "description": "Sample application that will replace text on webpages.",
+  "content_scripts": 
+  [
+    {
+      "matches": ["*://*/*"],
+      "js": ["script.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
