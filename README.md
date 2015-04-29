@@ -7,7 +7,7 @@ Written and developed by [Matt Piccolella][matt-pic] and [ADI][adi].
 
 Credit to [Chrome Developer][chrome-developer].
 
-**Download the sample code [here][sample-code].**
+**Download the sample code [here][code-link].**
 
 ## Getting Started: FAQs
 
@@ -314,5 +314,7 @@ If you want to learn more about how to build awesome Chrome extensions, check ou
 [jquery]: http://learn.adicu.com/jquery/
 [inspiration]: http://www.creativebloq.com/web-design/google-chrome-extensions-21410570
 [rick-roll]: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+[learn]: https://adicu.com/resources
+[code-link]: https://dl.dropboxusercontent.com/s/r1q3c87miiktg0y/useless-chrome-extensions.zip
 
 
