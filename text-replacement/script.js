@@ -4,8 +4,8 @@ var DOCUMENT_FRAGMENT = 11;
 var TEXT = 3;
 
 // Enter things that you'd like to replace
-var MATCH = ['cloud'];
-var REPLACE = ['butt'];
+var MATCH = ['computer','person'];
+var REPLACE = ['robot','cantaloupe'];
 
 walk(document.body);
 
@@ -35,6 +35,7 @@ function walk(node) {
 function replaceText(textNode) {
 	var v = textNode.nodeValue;
 
+	// Go through and match/replace all the strings we've given it, using RegExp.
 	for (var i = 0; i < MATCH.length; i++) {
 		v = v.replace(new RegExp('\\b' + MATCH[i] + '\\b', 'g'), REPLACE[i]);
 	}

@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+  "name": "My First Chrome Extension",
+  "version": "1.0",
+  "description": "The very first chrome extension I've ever written!",
+  "content_scripts": 
+  [
+    {
+      "matches": ["*://*/*"],
+      "js": ["script.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
