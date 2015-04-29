@@ -5,7 +5,7 @@
 
 Written and developed by [Matt Piccolella][matt-pic] and [ADI][adi].
 
-Credit to [Chrome Developer][chrome-developer], [Ray Wenderlich][wenderlich], [Facebook Developers][facebook-dev].
+Credit to [Chrome Developer][chrome-developer].
 
 **Download the sample code [here][sample-code].**
 
@@ -181,39 +181,118 @@ function replaceText(textNode) {
 }
 ```
 
-Use this to make any replacements you want!
+All you need to do to have all the text-replace goodness you want is change the arrays at the top of the script.
 
 <a id="image-replace"></a>
 ### 2.2 Image Replacement
+There's not enough Nicholas Cage on the Internet. Let's do that by changing all the images on the Internet to a random picture of Nicholas Cage!
+
+`manifest.json`
+```javascript
+{
+  "manifest_version": 2,
+  "name": "Cage Match",
+  "version": "1.0",
+  "description": "Replace all the images on a webpage with pictures of Nicholas Cage.",
+  "content_scripts": 
+  [
+    {
+      "matches": ["*://*/*"],
+      "js": ["script.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
+```
+
+`script.js`
+```javascript
+// Links to pictures of Nicholas Cage
+var CAGE_URLS = ['http://upload.wikimedia.org/wikipedia/commons/3/33/Nicolas_Cage_2011_CC.jpg',
+                                 'http://d1oi7t5trwfj5d.cloudfront.net/98/1d/ac290201446e98aabcef4965f141/nicolas-cage.jpg',
+                                 'http://pmcdeadline2.files.wordpress.com/2010/08/nicolas_cage.jpg',
+                                 'http://upload.wikimedia.org/wikipedia/commons/f/f3/Nicolas_Cage_-_66%C3%A8me_Festival_de_Venise_(Mostra).jpg',
+                                 'http://zuqka.nation.co.ke/wp-content/uploads/2013/07/Nicolas-Cage.jpg'
+                                ];
+
+// Pick out a random image from our collection.
+function getRandomImage() {
+    return CAGE_URLS[Math.floor(Math.random() * CAGE_URLS.length)];
+}
+
+// Get all the images on a page.
+var images = document.getElementsByTagName("img");
+
+// Replace each image with a random one.
+for (var i = 0; i < images.length; i++) {
+    var image = images[i];
+  image.src = getRandomImage();
+  console.log(image);
+}
+```
+
+Replace the links in our `CAGE_URLS` array with links to any pictures you'd like, and watch your browsing experience transform!
 
 <a id="link-replace"></a>
 ### 2.3 Link Replacement
+[Rick-Rolling](rick-roll) is hilarious. Let's make a certain percentage of the links on every page redirect to 'Never Gonna Give You Up'.
+
+`manifest.json`
+```javascript
+{
+  "manifest_version": 2,
+  "name": "Rick Roll",
+  "version": "1.0",
+  "description": "Application that replaces all links with a link to RickRoll.",
+  "content_scripts": 
+  [
+    {
+      "matches": ["*://*/*"],
+      "js": ["script.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
+```
+
+`script.js`
+```javascript
+// Link and a percentage likelihood to replace your link.
+var LINK = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+var RATIO = 0.5;
+
+// Get all the links on the page.
+var links = document.getElementsByTagName("a");
+
+// Replace ~RATIO of them with Rick Astley.
+for (var i = 0; i < links.length; i++) {
+    if (Math.random() < RATIO) {
+    links[i].href = LINK;
+    }
+}
+```
+
+Click with care people!
 
 <a id="other-things"></a>
 ### 2.4 Other Things
 The applications we'll This is just one simple `manifest.json` file. There are lots of other attributes you can set, such as [`background`][background], which allows us to run a single script in the background, [`permissions`][permissions], which allow us to ask the user for certain things we may not be able to do withour permission, and [`browser_action`][browser-action], which creates small icons next to the search bar that you can click and have something happen. However, `content_scripts` is what we'll mainly be looking in this tutorial.
 
-
-
-<a id="text-replace"></a>
-## 2.0 Text Replacement
-
-<a id="image-replace"></a>
-## 3.0 Image Replacement
-
-<a id="link-replace"></a>
-## 4.0 Link Replacement
-
-My name is [Matt Piccolella][matt-pic] and the GitHub repository for this is available [here][github-repo]
+My name is [Matt Piccolella][matt-pic] and the GitHub repository for this is available [here][github-repo].
 
 ___________
 
 <a id="additionalresources"></a>
 ## Additional Resources
+If you want to learn more about how to build awesome Chrome extensions, check out these resources:
 
-While React Native is still a very new technology, there are still lots of quality resources available to learn more about it. Below are some good places to start:
+[Sample Extensions][samples]
 
+[Boiler Plate to Start][extensionizr]
 
+[jQuery and DOM Manipulation][jquery]
+
+[Inspiration][inspiration]
 
 [ADI Resources][learn]
 
@@ -227,7 +306,13 @@ While React Native is still a very new technology, there are still lots of quali
 [chrome-developer]: https://developer.chrome.com/extensions
 [dom]: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model
 [background]: https://developer.chrome.com/extensions/event_pages
-[permission]: https://developer.chrome.com/extensions/activeTab
+[permissions]: https://developer.chrome.com/extensions/activeTab
 [browser-action]: https://developer.chrome.com/extensions/browserAction
 [chrome-install]: https://www.google.com/chrome/browser/desktop/
+[samples]: https://developer.chrome.com/extensions/samples
+[extensionizr]: http://extensionizr.com/
+[jquery]: http://learn.adicu.com/jquery/
+[inspiration]: http://www.creativebloq.com/web-design/google-chrome-extensions-21410570
+[rick-roll]: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+
 

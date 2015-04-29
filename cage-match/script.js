@@ -1,4 +1,4 @@
-// Link and a percentage likelihood to replace your link.
+// Links to pictures of Nicholas Cage
 var CAGE_URLS = ['http://upload.wikimedia.org/wikipedia/commons/3/33/Nicolas_Cage_2011_CC.jpg',
 								 'http://d1oi7t5trwfj5d.cloudfront.net/98/1d/ac290201446e98aabcef4965f141/nicolas-cage.jpg',
 								 'http://pmcdeadline2.files.wordpress.com/2010/08/nicolas_cage.jpg',
@@ -6,12 +6,15 @@ var CAGE_URLS = ['http://upload.wikimedia.org/wikipedia/commons/3/33/Nicolas_Cag
 								 'http://zuqka.nation.co.ke/wp-content/uploads/2013/07/Nicolas-Cage.jpg'
 								];
 
+// Pick out a random image from our collection.
 function getRandomImage() {
 	return CAGE_URLS[Math.floor(Math.random() * CAGE_URLS.length)];
 }
 
+// Get all the images on a page.
 var images = document.getElementsByTagName("img");
 
+// Replace each image with a random one.
 for (var i = 0; i < images.length; i++) {
 	var image = images[i];
   image.src = getRandomImage();
