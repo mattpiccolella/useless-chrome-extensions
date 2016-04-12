@@ -306,6 +306,7 @@ As a result, Chrome extensions provide us with something called [background page
   },
   ...
 }
+```
 
 By adding this, we'll have a new background page created by the extension that is associated with each of our scripts. To try this out, create a new file called `background.js` and add a single line:
 
@@ -747,7 +748,7 @@ If you want to learn more about how to build awesome Chrome extensions, check ou
 [inspiration]: http://www.creativebloq.com/web-design/google-chrome-extensions-21410570
 [rick-roll]: https://www.youtube.com/watch?v=dQw4w9WgXcQ
 [learn]: https://adicu.com/resources
-[code-link]: https://dl.dropboxusercontent.com/s/r1q3c87miiktg0y/useless-chrome-extensions.zip
+[code-link]: https://github.com/mjp2220/useless-chrome-extensions/archive/master.zip
 [browser-actions]: https://developer.chrome.com/extensions/browserAction
 [background-pages]: https://developer.chrome.com/extensions/background_pages
 [message-passing]: https://developer.chrome.com/extensions/messaging
