@@ -1,5 +1,5 @@
 <a id="top"></a>
-# Building (Useless) Chrome Extesnions
+# Building (Useless) Chrome Extensions
 
 *Build (silly) things that can make your browser experience much more enjoyable.*
 
@@ -15,13 +15,12 @@ Credit to [Chrome Developer][chrome-developer].
 From Google Chrome's website, Chrome extensions "allow you to add functionality to Chrome without diving deeply into native code." This could include, for example, [changing the text that appears on the page][cloud-to-butt], [blocking ads that would appear on a page][ad-block], or [add some much-needed doge to your webpages][doge].
 
 ### Why should I build Chrome extensions?
-Chrome extensions are fun, fast, and easy! Using just a few lines of beginner JavaScript code, you can make something that can make people's lives easier (or make them laugh).
+Chrome extensions are fun, fast, and easy! Using just a few lines of beginner JavaScript code, you can make something that can make people's lives easier, or something that will make them laugh.
 
 ### What will this tutorial teach me?
 This tutorial will teach you the basics of Chrome extensions: what files you'll need, what goes in each file, and how to use it in your Chrome browser. After the tutorial, you will have several Chrome extensions that you can use.
 
 ## Using this Document
-
 The start of this document walks you through building a Chrome extension and launching it on your browser. After you've gotten your 'Hello World' extension done, we'll give you some examples of things you can do with your Chrome extensions. From there, it's all up to your own creativity!
 
 ## Table of Contents
