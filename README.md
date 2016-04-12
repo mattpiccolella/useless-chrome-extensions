@@ -5,7 +5,7 @@
 
 Written and developed by [Matt Piccolella][matt-pic] and [ADI][adi].
 
-Credit to [Chrome Developer][chrome-developer].
+Credit to [Chrome Developer] [chrome-developer].
 
 **Download the sample code [here][code-link].**
 
