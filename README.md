@@ -37,7 +37,7 @@ The start of this document walks you through building a Chrome extension and lau
     - [3.1 Background Scripts](#background)
     - [3.2 Browser Actions](#browser_action)
     - [3.3 Message Passing] (#messaging)
--    [4.0 Scott-ify](#scottify)
+-    [4.0 Scottify](#scottify)
     - [4.1 Text Replacement](#scott-text)
     - [4.2 Image Replacement](#scott-image)
     - [4.3 Advanced JavaScript: DOM Mutations](#scott-dom)
@@ -379,7 +379,7 @@ chrome.tabs.sendMessage(tab.id, {greeting: "hello"}, function(response) {
 However, as we see here, we have to provide a tab ID. This is because, as we saw before, there is one background page but many content pages; so, in order for the background to send to a content page, it needs to know which of the many content pages it needs to send the message to. As we'll see later, there are ways of finding the tab ID for the tab that you're interested in.
 
 <a id="scottify"></a>
-## 4.0 Scott-ify
+## 4.0 Scottify
 My favorite television show ever is "The Office." In it, Steve Carell stars as Michael Scott, my favorite television character of all time. So, whenever I see him in other movies or shows, I always think of him as Michael Scott, no matter what role he's playing. So, I want to build an extension to change his real name (Steve Carell) to his character's name (Michael Scott). Plus, we'll add one or two new features as well.
 
 <a id="scott-text"></a>
@@ -389,7 +389,7 @@ First, let's start with the most basic application, one that replaces the words 
 ```javascript
 {
   "manifest_version": 2,
-  "name": "Scott-ify",
+  "name": "Scottify",
   "version": "1.0",
   "description": "An extension that gives Michael Scott a more prominent place on the Internet.",
   "content_scripts": 
@@ -596,7 +596,7 @@ Our final code should look as follows:
 ```javascript
 {
   "manifest_version": 2,
-  "name": "Scott-ify",
+  "name": "Scottify",
   "version": "1.0",
   "description": "An extension that replaces Steve Carell with Michael Scott around the Internet.",
   "content_scripts": 
