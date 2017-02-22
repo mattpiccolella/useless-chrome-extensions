@@ -3,7 +3,7 @@
 
 *Build (silly) things that can make your browser experience much more enjoyable.*
 
-Written and developed by [Matt Piccolella][matt-pic] and [ADI][adi].
+Written and developed by [Matt Piccolella][matt-pic] and [ADI][adi]. The GitHub repository for this talk is available [here][github-repo].
 
 Credit to [Chrome Developer] [chrome-developer].
 
@@ -37,10 +37,10 @@ The start of this document walks you through building a Chrome extension and lau
     - [3.1 Background Scripts](#background)
     - [3.2 Browser Actions](#browser_action)
     - [3.3 Message Passing] (#messaging)
--    [4.0 Drumpfinator](#drumpfinator)
-    - [4.1 Text Replacement](#drumpf-text)
-    - [4.2 Image Replacement](#drumpf-image)
-    - [4.3 Advanced JavaScript: DOM Mutations](#drumpf-dom)
+-    [4.0 Scott-ify](#scottify)
+    - [4.1 Text Replacement](#scott-text)
+    - [4.2 Image Replacement](#scott-image)
+    - [4.3 Advanced JavaScript: DOM Mutations](#scott-dom)
 -   [Additional Resources](#additionalresources)
 
 ------------------------------
@@ -190,6 +190,14 @@ function replaceText(textNode) {
 
 All you need to do to have all the text-replace goodness you want is change the arrays at the top of the script.
 
+You may notice that our text only replaces the lowercase version of 'computer.' If you try going [here][wiki-comp], you'll see that mentions within sentences are changed, but not the title. To change this, you have a few options. The first, which is likely the expected behavior, would be to simply add more pairs to `MATCH` and `REPLACE` i.e. add 'Computer' to `MATCH` and `Robot` to `REPLACE`. This way we can match the capitalized versions. Alternatively, you could swap the 'g' flag in `v.replace` to be an `i` flag, which stands for case insensitive. Thus, your new line would look as follows:
+
+```javascript
+v = v.replace(new RegExp('\\b' + MATCH[i] + '\\b', 'g'), REPLACE[i]);
+```
+
+However, this would replace capitalized words with lowercase words, which is not always what we want.
+
 <a id="image-replace"></a>
 ### 2.2 Image Replacement
 There's not enough Nicholas Cage on the Internet. Let's do that by changing all the images on the Internet to a random picture of Nicholas Cage!
@@ -216,11 +224,11 @@ There's not enough Nicholas Cage on the Internet. Let's do that by changing all 
 ```javascript
 // Links to pictures of Nicholas Cage
 var CAGE_URLS = ['http://upload.wikimedia.org/wikipedia/commons/3/33/Nicolas_Cage_2011_CC.jpg',
-                                 'http://d1oi7t5trwfj5d.cloudfront.net/98/1d/ac290201446e98aabcef4965f141/nicolas-cage.jpg',
-                                 'http://pmcdeadline2.files.wordpress.com/2010/08/nicolas_cage.jpg',
-                                 'http://upload.wikimedia.org/wikipedia/commons/f/f3/Nicolas_Cage_-_66%C3%A8me_Festival_de_Venise_(Mostra).jpg',
-                                 'http://zuqka.nation.co.ke/wp-content/uploads/2013/07/Nicolas-Cage.jpg'
-                                ];
+                 'http://cdn.financebuzz.io/images/2016/02/03/nicholascage1.jpg',
+                 'http://pmcdeadline2.files.wordpress.com/2010/08/nicolas_cage.jpg',
+                 'http://upload.wikimedia.org/wikipedia/commons/f/f3/Nicolas_Cage_-_66%C3%A8me_Festival_de_Venise_(Mostra).jpg',
+                 'http://cdn-static.denofgeek.com/sites/denofgeek/files/nicolas-cage-nicolas-cage-26969958-1974-1300.jpg'
+                ];
 
 // Pick out a random image from our collection.
 function getRandomImage() {
@@ -271,7 +279,7 @@ var RATIO = 0.5;
 // Get all the links on the page.
 var links = document.getElementsByTagName("a");
 
-// Replace ~RATIO of them with Rick Astley.
+// Replace RATIO of them with Rick Astley.
 for (var i = 0; i < links.length; i++) {
     if (Math.random() < RATIO) {
     links[i].href = LINK;
@@ -283,9 +291,7 @@ Click with care people!
 
 <a id="other-things"></a>
 ### 2.4 Other Things
-The applications we'll This is just one simple `manifest.json` file. There are lots of other attributes you can set, such as [`background`][background], which allows us to run a single script in the background, [`permissions`][permissions], which allow us to ask the user for certain things we may not be able to do withour permission, and [`browser_action`][browser-action], which creates small icons next to the search bar that you can click and have something happen. However, `content_scripts` is what we'll mainly be looking in this tutorial.
-
-My name is [Matt Piccolella][matt-pic] and the GitHub repository for this is available [here][github-repo].
+This is just one simple `manifest.json` file. There are lots of other attributes you can set, such as [`background`][background], which allows us to run a single script in the background, [`permissions`][permissions], which allow us to ask the user for certain things we may not be able to do withour permission, and [`browser_action`][browser-action], which creates small icons next to the search bar that you can click and have something happen. However, `content_scripts` is what we'll mainly be looking in this tutorial.
 
 <a id="advanced"></a>
 ## 3.0 More Advanced Topics
@@ -372,23 +378,20 @@ chrome.tabs.sendMessage(tab.id, {greeting: "hello"}, function(response) {
 
 However, as we see here, we have to provide a tab ID. This is because, as we saw before, there is one background page but many content pages; so, in order for the background to send to a content page, it needs to know which of the many content pages it needs to send the message to. As we'll see later, there are ways of finding the tab ID for the tab that you're interested in.
 
-<a id="drumpfinator"></a>
-## 4.0 Drumpfinator
-If any of you are fans of "Last Week Tonight with John Oliver," you may have seen the episode in which he [discusses Donald Trump][john-oliver]. In it, Oliver encourages Trump to return his name to his ancestral name, "Drumpf." As a part of this goal, John Oliver's team released a Chrome extension called 
-"Drumpfinator," which replaces every instance of the word "Trump" with "Drumpf." The extension is available [here][drumpfinator]. 
+<a id="scottify"></a>
+## 4.0 Scott-ify
+My favorite television show ever is "The Office." In it, Steve Carell stars as Michael Scott, my favorite television character of all time. So, whenever I see him in other movies or shows, I always think of him as Michael Scott, no matter what role he's playing. So, I want to build an extension to change his real name (Steve Carell) to his character's name (Michael Scott). Plus, we'll add one or two new features as well.
 
-As a part of this curriculum, I thought it might be cool for us to build our own Drumpfinator extension, with one or two extra features.
-
-<a id="drumpf-text"></a>
+<a id="scott-text"></a>
 ### 4.1 Text Replacement
-First, let's start with the most basic application, one that replaces the words on the page with "Drumpf" instead of "Trump." To do this, let's first create our basic `manifest.json` file in a new directory called `drumpfinator`:
+First, let's start with the most basic application, one that replaces the words on the page with "Michael Scott" instead of "Steve Carell." To do this, let's first create our basic `manifest.json` file in a new directory called `scottify`:
 
 ```javascript
 {
   "manifest_version": 2,
-  "name": "Drumpfinator",
+  "name": "Scott-ify",
   "version": "1.0",
-  "description": "An extension that replaces all instances of 'Trump' with 'Drumpf'",
+  "description": "An extension that gives Michael Scott a more prominent place on the Internet.",
   "content_scripts": 
   [
     {
@@ -400,7 +403,7 @@ First, let's start with the most basic application, one that replaces the words 
 }
 ```
 
-Now that we have this, copy `script.js` from our sample `text-replacement` code we saw earlier. Inside of it, please update `MATCH` and `REPLACE` to be 'Trump' and 'Drumpf'. When you're finished, your code should look as follows:
+Now that we have this, copy `script.js` from our sample `text-replacement` code we saw earlier. Inside of it, please update `MATCH` and `REPLACE` to be 'Steve Carell' and 'Michael Scott'. When you're finished, your code should look as follows:
 
 ```javascript
 var ELEMENT = 1;
@@ -409,8 +412,8 @@ var DOCUMENT_FRAGMENT = 11;
 var TEXT = 3;
 
 // Enter things that you'd like to replace
-var MATCH = ['Trump'];
-var REPLACE = ['Drumpf'];
+var MATCH = ['Steve Carell'];
+var REPLACE = ['Michael Scott'];
 
 walk(document.body);
 
@@ -449,17 +452,17 @@ function replaceText(textNode) {
 }
 ```
 
-Load your new extension by pressing "Load unpacked extension" at `chrome://extensions` and selecting your `drumpfinator` directory. Go to the Wikipedia page for Donald Trump located [here][trump-wiki], and you should see the names have changed. Woo!
+Load your new extension by pressing "Load unpacked extension" at `chrome://extensions` and selecting your `scottify` directory. Go to the Wikipedia page for Steve Carell located [here][steve-carell], and you should see the names have changed. Woo!
 
-<a id="drumpf-image"></a>
+<a id="scott-image"></a>
 ### 4.2 Image Replacement
-I've decided that my internet doesn't have enough Trump on it. So, I want my extension to be able to replace all the images on a page with images of Donald Trump. However, I don't want this for all pages, only for the ones that I want. I want to be able to press my icon and have all the images change to Donald Trump. To do this, let's use our more advanced techniques: background pages, browser actions, and message passing.
+I've decided that my internet doesn't have enough Michael Scott on it. So, I want my extension to be able to replace all the images on a page with images of Michael Scott. However, I don't want this for all pages, only for the ones that I want. I want to be able to press my icon and have all the images change to Michael Scott. To do this, let's use our more advanced techniques: background pages, browser actions, and message passing.
 
-First, let's set the icon of our extension. Download [this image][trump-image] and add it to your `drumpfinator` directory. Add this to your `manifest.json`:
+First, let's set the icon of our extension. Download [this image][scott-image] and add it to your `scottify` directory. Make sure it is named `scott.png`. Add this to your `manifest.json`:
 
 ```javascript
 "browser_action": {
-  "default_icon": "trump.png"
+  "default_icon": "scott.png"
 }
 ```
 
@@ -482,9 +485,9 @@ From here, our `manifest.json` file is complete, and should look as follows:
 ```javascript
 {
   "manifest_version": 2,
-  "name": "Drumpfinator",
+  "name": "Scottify",
   "version": "1.0",
-  "description": "An extension that replaces all instances of 'Trump' with 'Drumpf'",
+  "description": "An extension that gives Michael Scott a more prominent place on the Internet.",
   "content_scripts": 
   [
     {
@@ -499,7 +502,7 @@ From here, our `manifest.json` file is complete, and should look as follows:
     "persistent" : false
   },
   "browser_action": {
-    "default_icon": "trump.png"
+    "default_icon": "scott.png"
   }
 }
 ```
@@ -512,54 +515,54 @@ Now, let's create our new `background.js` file; add the following code there:
 // Called when the user clicks on the browser action icon.
 chrome.browserAction.onClicked.addListener(function(tab) {
   chrome.tabs.sendMessage(tab.id, {}, function(response) {
-    console.log("Your page has been trumpified!");
+    console.log("Your page has been scott-ified!");
   });
 });
 ```
 
-We see the only thing we do is add a listener to the click of our icon. Once we receive this click, we send a message to our tab ID. Once we hear back from our tab, we can confidently print that the page has been trumpified.
+We see the only thing we do is add a listener to the click of our icon. Once we receive this click, we send a message to our tab ID. Once we hear back from our tab, we can confidently print that the page has been scott-ified.
 
-In `script.js`, our content script, we need to add the functionality to both change the images to images of Trump and the ability to actually receive the messages our background script is sending. Add this code to the bottom of your `script.js` file:
+In `script.js`, our content script, we need to add the functionality to both change the images to images of Michael Scott and the ability to actually receive the messages our background script is sending. Add this code to the bottom of your `script.js` file:
 
 ```javascript
-// Replace all images with images of Donald Trump. 
-TRUMP_PICS = [
-  'http://static6.businessinsider.com/image/55918b77ecad04a3465a0a63/nbc-fires-donald-trump-after-he-calls-mexicans-rapists-and-drug-runners.jpg',
-  'http://cdn1.thr.com/sites/default/files/2015/08/splash-trump-a1.jpg',
-  'http://www.modernman.com/wp-content/uploads/2015/12/Trump-Funny.jpg',
-  'http://www.speakgif.com/wp-content/uploads/bfi_thumb/donald-trump-funny-face-animated-gif-30twjrw7kil4ifiwtasge8.gif',
-  'http://static1.businessinsider.com/image/566ed6766da811ff178b4567/eagle-handler-explains-what-happened-when-his-bald-eagle-attacked-trump.jpg'
+// Replace all images with images of Michael Scott. 
+SCOTT_PICS = [
+  'https://s-media-cache-ak0.pinimg.com/originals/4c/ac/d0/4cacd03e19d8b8ab7b939462176f8355.png',
+  'http://www.businessnewsdaily.com/images/i/000/008/678/original/michael-scott-the-office.PNG?1432126986',
+  'http://cdn1.theodysseyonline.com/files/2015/10/30/6358177813696988401291296824_michael-scott-the-office-9.jpg',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwrkfrrT2PCfRAheKr0BICorUaxfZHNQc6NGwhK4bO_8qf9g6p',
+  'https://susanecolasanti.files.wordpress.com/2007/09/michaelscott2.jpg'
 ]
 
-function trumpify() {
+function scottify() {
   // Get all the images on a page.
   var images = document.getElementsByTagName("img");
 
   // Replace each image with a random one.
   for (var i = 0; i < images.length; i++) {
     var image = images[i];
-    image.src = TRUMP_PICS[Math.floor(Math.random() * TRUMP_PICS.length)];
+    image.src = SCOTT_PICS[Math.floor(Math.random() * SCOTT_PICS.length)];
   }
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  trumpify();
+  scottify();
 });
 ```
 
-The code at the top is very similar to the code from our `cage-match` extension provided in the sample code and shown above. We create a list of links, each one of which is a picture of Donald Trump. Then, we create a function called `trumpify`, which takes each image on the current page, and makes it an image of Donald Trump from one of the five that we have provided.
+The code at the top is very similar to the code from our `cage-match` extension provided in the sample code and shown above. We create a list of links, each one of which is a picture of Michael Scott. Then, we create a function called `scottify`, which takes each image on the current page, and makes it an image of Michael Scott from one of the five that we have provided.
 
 The interesting bit is the part at the bottom. Essentially, we add a listener to the Chrome runtime that listens for any messages that are sent to the tab. As soon as we get a message, we know it is being sent from our background page to tell us that our icon has been pressed, so at that point, we can change the images on our page.
 
 Reload your extension. Then, go to Google Images and search for something, like "pizza" or "puppies." Then, click our extension logo and watch all your pictures change!
 
-<a id="drumpf-dom"></a>
+<a id="scott-dom"></a>
 ### 4.3 Advanced JavaScript: DOM Mutations
-Our extension is looking pretty good, but there's one problem. Try doing a Google search for "Donald Trump," and look at the search results for the first page. You should see that all of our "Trump"s have been changed to "Drumpf"s. However, try clicking to the next page; you should still see "Trump." 
+Our extension is looking pretty good, but there's one problem. Try doing a Google search for "Steve Carell" and look at the search results for the first page. You should see that all of our "Steve Carell"s have been changed to "Michael Scott"s. However, try clicking to the next page; you should still see "Steve Carell." 
 
 This is because of a problem in the way that content scripts work. Remember in our `manifest.json` file where we specified `run_at`: `document_end`? This basically says that as soon as our page is loaded for the first time, run our script, which does the text replacement. However, many pages load things dynamically, which update the current document without having to load a new page. Facebook does this so you don't have to reload the page to scroll down on your newsfeed, and Google does this with its search results. So, how can we change the text in this dynamically loaded content?
 
-We can do this with an advanced JavaScript technique called mutation observing. Essentially, we can create an observer that listens for certain events that occur within our DOM; this could be an event like the addition of a new link, the deletion of an image, or anything like that. In this case, we want to listen for the insertion of new elements; these new elements that are inserted may have "Trump"s in them, which we definitely need to change.
+We can do this with an advanced JavaScript technique called mutation observing. Essentially, we can create an observer that listens for certain events that occur within our DOM; this could be an event like the addition of a new link, the deletion of an image, or anything like that. In this case, we want to listen for the insertion of new elements; these new elements that are inserted may have "Steve Carell"s in them, which we definitely need to change.
 
 To do this, add the following code to your `script.js`:
 
@@ -583,9 +586,9 @@ observer.observe(document, {
 });
 ```
 
-First, we create a `MutationObserver` object. We go through each of our mutations, looking at any nodes that may have been added in that mutation. Then, we step through each of those added nodes, and call `walk` on them, the function that we use to do our text replacement. This way, we make sure to do text replacement on every new node that is added. Then, we call the observer to observe, passing in our entire document and instructing it to look at both the childList of our document as well as the subtree (essentially any sub-elements of the document). This way, whenever any new elements are added to our page, we can Drumpfify them without having to reload the page.
+First, we create a `MutationObserver` object. We go through each of our mutations, looking at any nodes that may have been added in that mutation. Then, we step through each of those added nodes, and call `walk` on them, the function that we use to do our text replacement. This way, we make sure to do text replacement on every new node that is added. Then, we call the observer to observe, passing in our entire document and instructing it to look at both the childList of our document as well as the subtree (essentially any sub-elements of the document). This way, whenever any new elements are added to our page, we can Scottify them without having to reload the page.
 
-Reload your extension and try the Google search results again. No matter how many pages you go through, you should see your Drumpf results. 
+Reload your extension and try the Google search results again. No matter how many pages you go through, you should see your Scott results. 
 
 Our final code should look as follows:
 
@@ -593,9 +596,9 @@ Our final code should look as follows:
 ```javascript
 {
   "manifest_version": 2,
-  "name": "Drumpfinator",
+  "name": "Scott-ify",
   "version": "1.0",
-  "description": "An extension that replaces all instances of 'Trump' with 'Drumpf'",
+  "description": "An extension that replaces Steve Carell with Michael Scott around the Internet.",
   "content_scripts": 
   [
     {
@@ -610,7 +613,7 @@ Our final code should look as follows:
     "persistent" : false
   },
   "browser_action": {
-    "default_icon": "trump.png"
+    "default_icon": "scott.png"
   }
 }
 ```
@@ -623,8 +626,8 @@ var DOCUMENT_FRAGMENT = 11;
 var TEXT = 3;
 
 // Enter things that you'd like to replace
-var MATCH = ['Trump'];
-var REPLACE = ['Drumpf'];
+var MATCH = ['Steve Carell'];
+var REPLACE = ['Michael Scott'];
 
 walk(document.body);
 
@@ -680,16 +683,16 @@ observer.observe(document, {
     subtree:   true
 });
 
-// Replace all images with images of Donald Trump. 
-TRUMP_PICS = [
-  'http://static6.businessinsider.com/image/55918b77ecad04a3465a0a63/nbc-fires-donald-trump-after-he-calls-mexicans-rapists-and-drug-runners.jpg',
-  'http://cdn1.thr.com/sites/default/files/2015/08/splash-trump-a1.jpg',
-  'http://www.modernman.com/wp-content/uploads/2015/12/Trump-Funny.jpg',
-  'http://www.speakgif.com/wp-content/uploads/bfi_thumb/donald-trump-funny-face-animated-gif-30twjrw7kil4ifiwtasge8.gif',
-  'http://static1.businessinsider.com/image/566ed6766da811ff178b4567/eagle-handler-explains-what-happened-when-his-bald-eagle-attacked-trump.jpg'
+// Replace all images with images of Michael Scott. 
+SCOTT_PICS = [
+  'https://s-media-cache-ak0.pinimg.com/originals/4c/ac/d0/4cacd03e19d8b8ab7b939462176f8355.png',
+  'http://www.businessnewsdaily.com/images/i/000/008/678/original/michael-scott-the-office.PNG?1432126986',
+  'http://cdn1.theodysseyonline.com/files/2015/10/30/6358177813696988401291296824_michael-scott-the-office-9.jpg',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwrkfrrT2PCfRAheKr0BICorUaxfZHNQc6NGwhK4bO_8qf9g6p',
+  'https://susanecolasanti.files.wordpress.com/2007/09/michaelscott2.jpg'
 ]
 
-function trumpify() {
+function scottify() {
 
   // Get all the images on a page.
   var images = document.getElementsByTagName("img");
@@ -697,12 +700,12 @@ function trumpify() {
   // Replace each image with a random one.
   for (var i = 0; i < images.length; i++) {
     var image = images[i];
-    image.src = TRUMP_PICS[Math.floor(Math.random() * TRUMP_PICS.length)];
+    image.src = SCOTT_PICS[Math.floor(Math.random() * SCOTT_PICS.length)];
   }
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  trumpify();
+  scottify();
   walk(document.body);
 });
 ```
@@ -712,7 +715,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 // Called when the user clicks on the browser action icon.
 chrome.browserAction.onClicked.addListener(function(tab) {
   chrome.tabs.sendMessage(tab.id, {}, function(response) {
-    console.log("Your page has been trumpified!");
+    console.log("Your page has been scottified!");
   });
 });
 ```
@@ -752,10 +755,10 @@ If you want to learn more about how to build awesome Chrome extensions, check ou
 [browser-actions]: https://developer.chrome.com/extensions/browserAction
 [background-pages]: https://developer.chrome.com/extensions/background_pages
 [message-passing]: https://developer.chrome.com/extensions/messaging
-[john-oliver]: https://www.youtube.com/watch?v=DnpO_RTSNmQ
-[drumpfinator]: https://chrome.google.com/webstore/detail/drumpfinator/hcimhbfpiofdihhdnofbdlhjcmjopilp?hl=en
-[trump-wiki]: https://en.wikipedia.org/wiki/Donald_Trump
-[trump-image]: http://graphics8.nytimes.com/newsgraphics/2015/01/30/candidate-tracker/assets/images/trump-square-silo-150.png
 [event-pages]: https://developer.chrome.com/extensions/event_pages
+[wiki-comp]: https://en.wikipedia.org/wiki/Computer
+[the-office]: https://en.wikipedia.org/wiki/The_Office_(U.S._TV_series)
+[steve-carell]: https://en.wikipedia.org/wiki/Steve_Carell
+[scott-image]: http://vignette1.wikia.nocookie.net/elderscrolls/images/2/24/Michael_Scott_Prison.png/revision/latest?cb=20131114014914
 
 

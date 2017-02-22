@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "Drumpfinator",
+  "name": "Scottify",
   "version": "1.0",
-  "description": "An extension that replaces all instances of 'Trump' with 'Drumpf'",
+  "description": "An extension that replaces Steve Carell with Michael Scott around the Internet.",
   "content_scripts": 
   [
     {
@@ -17,6 +17,6 @@
     "persistent" : false
   },
   "browser_action": {
-    "default_icon": "trump.png"
+    "default_icon": "scott.png"
   }
 }

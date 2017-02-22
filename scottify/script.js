@@ -4,8 +4,8 @@ var DOCUMENT_FRAGMENT = 11;
 var TEXT = 3;
 
 // Enter things that you'd like to replace
-var MATCH = ['Trump'];
-var REPLACE = ['Drumpf'];
+var MATCH = ['Steve Carell'];
+var REPLACE = ['Michael Scott'];
 
 walk(document.body);
 
@@ -61,16 +61,16 @@ observer.observe(document, {
     subtree:   true
 });
 
-// Replace all images with images of Donald Trump. 
-TRUMP_PICS = [
-  'http://static6.businessinsider.com/image/55918b77ecad04a3465a0a63/nbc-fires-donald-trump-after-he-calls-mexicans-rapists-and-drug-runners.jpg',
-  'http://cdn1.thr.com/sites/default/files/2015/08/splash-trump-a1.jpg',
-  'http://www.modernman.com/wp-content/uploads/2015/12/Trump-Funny.jpg',
-  'http://www.speakgif.com/wp-content/uploads/bfi_thumb/donald-trump-funny-face-animated-gif-30twjrw7kil4ifiwtasge8.gif',
-  'http://static1.businessinsider.com/image/566ed6766da811ff178b4567/eagle-handler-explains-what-happened-when-his-bald-eagle-attacked-trump.jpg'
+// Replace all images with images of Michael Scott. 
+SCOTT_PICS = [
+  'https://s-media-cache-ak0.pinimg.com/originals/4c/ac/d0/4cacd03e19d8b8ab7b939462176f8355.png',
+  'http://www.businessnewsdaily.com/images/i/000/008/678/original/michael-scott-the-office.PNG?1432126986',
+  'http://cdn1.theodysseyonline.com/files/2015/10/30/6358177813696988401291296824_michael-scott-the-office-9.jpg',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwrkfrrT2PCfRAheKr0BICorUaxfZHNQc6NGwhK4bO_8qf9g6p',
+  'https://susanecolasanti.files.wordpress.com/2007/09/michaelscott2.jpg'
 ]
 
-function trumpify() {
+function scottify() {
 
   // Get all the images on a page.
   var images = document.getElementsByTagName("img");
@@ -78,11 +78,11 @@ function trumpify() {
   // Replace each image with a random one.
   for (var i = 0; i < images.length; i++) {
     var image = images[i];
-    image.src = TRUMP_PICS[Math.floor(Math.random() * TRUMP_PICS.length)];
+    image.src = SCOTT_PICS[Math.floor(Math.random() * SCOTT_PICS.length)];
   }
 }
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  trumpify();
+  scottify();
   walk(document.body);
 });
