@@ -726,11 +726,11 @@ ___________
 ## Additional Resources
 If you want to learn more about how to build awesome Chrome extensions, check out these resources:
 
-[Sample Extensions][samples]
-[Boiler Plate to Start][extensionizr]
-[jQuery and DOM Manipulation][jquery]
-[Inspiration][inspiration]
-[ADI Resources][learn]
+- [Sample Extensions][samples]
+- [Boiler Plate to Start][extensionizr]
+- [jQuery and DOM Manipulation][jquery]
+- [Inspiration][inspiration]
+- [ADI Resources][learn]
 
 [cloud-to-butt]: https://chrome.google.com/webstore/detail/cloud-to-butt-plus/apmlngnhgbnjpajelfkmabhkfapgnoai
 [ad-block]: https://chrome.google.com/webstore/detail/betafish-adblocker/gighmmpiobklfepjocnamgkkbiglidom
